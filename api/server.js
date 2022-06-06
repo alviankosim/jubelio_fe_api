@@ -11,7 +11,7 @@ const Hapi = require('@hapi/hapi'),
 
 
 // fetching product from elevenia API
-// initProduct();
+initProduct();
 
 const server = Hapi.server({
     port: process.env.PORT || 8080,
