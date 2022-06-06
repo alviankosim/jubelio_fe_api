@@ -1,0 +1,213 @@
+{
+	"info": {
+		"_postman_id": "1cb7770d-5907-4a36-ba60-11e195f65ae0",
+		"name": "Ecommerce API",
+		"description": "This is Ecommerce API fetched from the postgres database (source: elevania API)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "List Product",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/products?page=0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Product Detail",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/products/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add New Product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "New Product",
+							"description": "Nama produknya",
+							"type": "text"
+						},
+						{
+							"key": "sku",
+							"value": "nwp-01",
+							"description": "SKU produknya",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "20000",
+							"description": "Harga produknya",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "<h1>Sukses</h1>",
+							"description": "Deskripsi produknya",
+							"type": "text"
+						},
+						{
+							"key": "images",
+							"type": "file",
+							"src": "/Users/alvian/Downloads/Hari Besar PancasilaModel 1 green.jpg"
+						},
+						{
+							"key": "images",
+							"type": "file",
+							"src": "/Users/alvian/Downloads/Panasonic_logo_(Blue).svg.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8081/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Product",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "BaseUS USB Cables",
+							"description": "Nama produknya",
+							"type": "text"
+						},
+						{
+							"key": "sku",
+							"value": "bss-044422",
+							"description": "SKU produknya",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "20000",
+							"description": "Harga produknya",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "<h1>Sukses</h1>",
+							"description": "Deskripsi produknya",
+							"type": "text"
+						},
+						{
+							"key": "images",
+							"type": "file",
+							"src": "/Users/alvian/Downloads/Hari Besar PancasilaModel 1 green.jpg"
+						},
+						{
+							"key": "images",
+							"type": "file",
+							"src": "/Users/alvian/Downloads/Panasonic_logo_(Blue).svg.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8081/products/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Product",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/products/367",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"products",
+						"367"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Product Image",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/products/images/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"products",
+						"images",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
