@@ -1,3 +1,3 @@
-var product = require('./product');
+const product = require('./product')
 
-module.exports = [].concat(product);
+module.exports = [].concat(product)

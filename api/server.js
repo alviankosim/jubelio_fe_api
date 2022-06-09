@@ -1,60 +1,49 @@
-'use strict';
+'use strict'
 
 // require dotenv
-require('dotenv').config();
+require('dotenv').config()
 
-const Hapi = require('@hapi/hapi'),
-      routes = require('./app/routes'),
-      { initProduct } = require('./lib/elevenia'),
-      path = require('path'),
-      Inert = require('@hapi/inert');
-
+const Hapi = require('@hapi/hapi')
+const { initProduct } = require('./lib/elevenia')
+const path = require('path')
 
 // fetching product from elevenia API
-initProduct();
-
-const server = Hapi.server({
-    port: process.env.PORT || 8080,
-    host: 'localhost',
-    routes: {
-        cors: true,
-        files: {
-            relativeTo: path.join(__dirname, 'public')
-        }
-    }
-});
-
-// file base directory
-server.app.baseDirectory = __dirname;
-
-// routes
-server.route(routes);
+// initProduct();
 
 // start server
-const init = async () => {
+const createServer = async () => {
 
-    await server.register(Inert);
-
-    // public files
-    server.route({
-        method: 'GET',
-        path: '/{param*}',
-        handler: {
-            directory: {
-                path: '.',
-                redirectToSlash: true
+    const server = Hapi.server({
+        port: process.env.PORT || 8080,
+        host: 'localhost',
+        routes: {
+            cors: true,
+            files: {
+                relativeTo: path.join(__dirname, 'public')
             }
         }
-    });
+    })
 
-    await server.start();
-    console.log(`Server running at: ${server.info.uri}`);
-};
+    // file base directory
+    server.app.baseDirectory = __dirname
+
+    // plugins
+    await server.register(require('@hapi/inert'))
+    await server.register(require('blipp'))
+    await server.register(require('./plugins/router'))
+
+    return server
+}
 
 // on error rejection
-process.on('unhandledRejection', (err) => {
-    console.log(err);
-    process.exit(1);
-});
+createServer()
+    .then(server => {
+        server.start()
+        console.log(`Server running at: ${server.info.uri}`)
+    })
+    .catch(err => {
+        console.log(err)
+        process.exit(1)
+    })
 
-init();
+module.exports = createServer
