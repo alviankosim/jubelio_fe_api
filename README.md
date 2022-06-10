@@ -90,7 +90,7 @@ npm start
 		 - [x] API framework: Hapi.js
 	 - [x] Database
 		 - [x] PostgreSQL
- - [ ] Requirement
+ - [x] Requirement
 	 - [x] -   Fetching all product list from Elevania API and import to database
 	 - [x] -   The data of the product must have Name, SKU, Image, Price, and Description.
 	 - [x] -   SKU cannot be duplicate, and Description can be null.
