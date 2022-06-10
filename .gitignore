@@ -1,4 +1,5 @@
 api/node_modules
 api/public/uploads/*
+!api/public/uploads/index.html
 fe/node_modules
 api/.env
