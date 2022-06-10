@@ -105,10 +105,10 @@ npm start
  - [ ] Non-functional requirement
 	 - [ ] -   Good, sensible file structuring that promotes modularity and good separation of logical/UI layers. (not applied to everything)
 	 - [ ] -   Adhere a good coding practices. (not applied to everything)
-	 - [ ] -   Add a unit testing script for Web API is a big plus. (time's up)
+	 - [x] -   Add a unit testing script for Web API is a big plus.
 	 - [x]  -   Responsive UI display is a big plus.
 	 - [ ] -   Configuring full stack logging & tracing is a big plus.
-	 - [ ] -   Set customized Lints that encourage good coding practices is a big plus.
+	 - [ ] -   Set customized Lints that encourage good coding practices is a big plus. (using standardJS)
 	 - [ ] -   Preferable to use a distributed version control system.
 	 - [x] -   Clear instructions on how to run your app locally. Please provide clear explanations about your project and how do we run it locally (using README.md is preferable).
 	 - [x] -   Delivering with a file zip is big no.
