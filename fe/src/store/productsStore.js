@@ -61,7 +61,22 @@ export class ProductsStore {
         try {
             const deletting = await axios.delete(`http://localhost:8081/products/images/${imageID}`)
 
-            this.products = [...(_.filter(this.products, {images: [{id: imageID}]}))];
+            let tempProd = _.cloneDeep(this.products);
+            // let findProduct = _.filter(tempProd, {images: [{id: imageID}]});
+            // let imagesList = _.reject(findProduct[0]?.images, {id: imageID});
+
+            // console.log({findProduct, imagesList})
+
+            // let dada = [...this.products, {...findProduct[0], images: imagesList}];
+            
+
+            this.products = _.map(this.products, singleProd => {
+                if(_.filter(singleProd?.images, {id: imageID}).length > 0)
+                    return {...singleProd, images: _.reject(singleProd?.images, {id: imageID})}
+                return singleProd
+            });
+
+            // console.log({haha});
         } catch (error) {
 
         }

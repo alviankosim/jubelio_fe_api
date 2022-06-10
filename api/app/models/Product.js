@@ -56,7 +56,7 @@ class Product {
                 FROM public.products prod
                 LEFT JOIN public.products_images img ON (img.product_id = prod.id)
 				GROUP BY prod.id
-                ORDER BY prod.id ASC
+                ORDER BY prod.date_modified DESC
                 LIMIT $1 ${(nextPage ? `OFFSET $2` : ``)}
                 `, [...params]
             );
@@ -142,10 +142,10 @@ class Product {
     static async deleteProductImageByID(productImageID){
         try {
 
-            const { rows } = await db.query(
-                `DELETE FROM products_images WHERE id = $1`,
-                [productImageID]
-            );
+            // const { rows } = await db.query(
+            //     `DELETE FROM products_images WHERE id = $1`,
+            //     [productImageID]
+            // );
 
             // fetching images list
             const { rows : rowsImage } = await db.query(
