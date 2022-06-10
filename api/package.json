@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "standard --fix",
+    "start": "node server.js",
+    "test": "lab -v"
   },
   "author": "",
   "license": "ISC",
@@ -18,5 +20,12 @@
     "mime": "^3.0.0",
     "pg": "^8.7.3",
     "xml2js": "^0.4.23"
+  },
+  "devDependencies": {
+    "@hapi/code": "8.0.6",
+    "@hapi/lab": "24.5.1",
+    "blipp": "4.0.2",
+    "codeclimate-test-reporter": "0.5.1",
+    "standard": "16.0.4"
   }
 }

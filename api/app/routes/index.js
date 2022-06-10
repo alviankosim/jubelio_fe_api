@@ -1,3 +1,14 @@
-var webapi = require('./webApi');
+const webapi = require('./webApi')
 
-module.exports = [].concat(webapi);
+const staticFiles = {
+    method: 'GET',
+    path: '/{param*}',
+    handler: {
+        directory: {
+            path: '.',
+            redirectToSlash: true
+        }
+    }
+};
+
+module.exports = [].concat(webapi, staticFiles)
