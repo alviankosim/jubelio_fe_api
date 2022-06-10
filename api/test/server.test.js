@@ -11,14 +11,17 @@ lab.experiment('API test', () => {
     server = await createServer()
   })
 
+  // testing list product
   lab.test('GET /products successful', async () => {
     const options = {
       method: 'GET',
-      url: '/products'
+      url: '/products?page=1'
     }
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(500)
-    // Code.expect(response.result).to.equal({ hello: 'world' })
+    Code.expect(response.statusCode).to.equal(200)
+    Code.expect(response.result?.data).to.be.an.array();
+    Code.expect(response.result?.data?.[0]).to.be.an.object();
+    Code.expect(response.result?.data?.[0]).to.include(['id', 'name', 'sku', 'price', 'description', 'product_no', 'images']);
   })
 })
