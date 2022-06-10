@@ -13,7 +13,7 @@ import withReactContent from 'sweetalert2-react-content'
 
 const MySwal = withReactContent(Swal)
 
-export const ModalAddProduct = ({ show, onClose, isLoading, product }) => {
+export const ModalAddProduct = ({ show, onClose, isLoading, store }) => {
 
     const [files, setFiles] = useState([]);
 
@@ -64,7 +64,7 @@ export const ModalAddProduct = ({ show, onClose, isLoading, product }) => {
                 formData.append('images', singleFile.file, singleFile.file.name)
             })
 
-            const submitting = await axios.post(`http://localhost:8081/products`, formData)
+            const submitting = await store.addProduct(formData);
 
             MySwal.close();
 
@@ -74,6 +74,7 @@ export const ModalAddProduct = ({ show, onClose, isLoading, product }) => {
                     'Successfully add new product',
                     'success'
                 )
+                onClose();
             }
         } catch (error) {
             MySwal.close();

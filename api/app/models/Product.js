@@ -51,10 +51,8 @@ class Product {
             const { rows } = await db.query(
                 `
                 SELECT 
-                    prod.id,
-                    prod.name,
-                    prod.price,
-					array_agg(img.image) as images
+                    prod.*,
+					array_agg(json_build_object('id', img.id, 'image', img.image)) as images
                 FROM public.products prod
                 LEFT JOIN public.products_images img ON (img.product_id = prod.id)
 				GROUP BY prod.id
@@ -171,7 +169,8 @@ class Product {
     async createProduct() {
         try {
             
-            const { rows } = await db.query(
+            console.log('masuk createproduct')
+            const inserting = await db.query(
                 `INSERT INTO products(name, sku, price,description, product_no) 
               VALUES ($1, $2, $3, $4, $5) RETURNING id`,
                 [this.name, this.sku, this.price, this.description, this.product_no]
@@ -181,14 +180,14 @@ class Product {
             const result = await db.query(
                 `INSERT INTO products_images(product_id, image) VALUES
                 ${this.images
-                        .map((singleImage, i) => (`(${rows?.[0]?.id}, $${i+1})`))
+                        .map((singleImage, i) => (`(${inserting.rows?.[0]?.id}, $${i+1})`))
                         .join(',')}`,
                 [...this.images]
             );
-
             
-            return rows;
+            return inserting.rows;
         } catch (error) {
+            console.log({error});
             throw error;
         }
     }

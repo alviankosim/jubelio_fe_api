@@ -1,7 +1,6 @@
 import { ProductsStore } from "./productsStore";
 
 export class RootStore {
-  loginStore;
   productsStore;
 
   constructor() {

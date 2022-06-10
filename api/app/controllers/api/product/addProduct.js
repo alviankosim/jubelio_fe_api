@@ -40,10 +40,17 @@ exports.addProduct = {
         description: request.payload?.description,
         images: moving.map(singleImage => (`${imgLocation}/${singleImage}`))
       }
-
-      if (Product.isValidProduct(singleProduct, { images: true })) {
-        // inserting to database
-        await insertProductToDB(singleProduct)
+      
+      let insertedProduct = singleProduct;
+      if (Product.isValidProduct(singleProduct, {images: true})) {
+          // inserting to database
+          const inserting = await insertProductToDB(singleProduct);
+          fetchInsertedProduct = await Product.getProductByID(inserting[0].id);
+          if (fetchInsertedProduct[0]?.images) {
+              insertedProduct = fetchInsertedProduct[0];
+          }
+      } else {
+          data.message = 'Please make sure all the data is valid';
       }
 
       data = {
@@ -65,12 +72,15 @@ exports.addProduct = {
 }
 
 const insertProductToDB = async (singleProduct) => {
-  try {
-    const product = new Product(singleProduct)
-    const result = await product.createProduct()
-  } catch (error) {
-    const errorToThrow = new Error()
-    errorToThrow.message = getErrorMessage(error?.code)
+    try {
+        const product = new Product(singleProduct);
+        const result = await product.createProduct();
+
+        return result;
+
+    } catch (error) {
+        const errorToThrow = new Error();
+        errorToThrow.message = getErrorMessage(error?.code);
 
     throw errorToThrow
   }

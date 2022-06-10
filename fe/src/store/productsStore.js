@@ -6,20 +6,21 @@ export class ProductsStore {
     loadIndex = 0;
     hasMore = true;
     products = [];
-    rootStore;
 
-    constructor(rootStore) {
+    constructor() {
         makeObservable(this, {
             products     : observable,
-            hasMore     : observable,
+            hasMore      : observable,
             loadIndex    : observable,
             fetchProducts: action,
+            addProduct: action,
+            editProduct: action,
             deleteProduct: action,
+            deleteProductImage: action,
             getProducts  : computed,
             getLoadIndex : computed,
-            getHasMore  : computed
+            getHasMore   : computed
         });
-        this.rootStore = rootStore;
     }
 
     async fetchProducts() {
@@ -32,12 +33,38 @@ export class ProductsStore {
         this.products = productsResponse?.data?.data ?? [];
     }
 
+    async editProduct(productID, formData) {
+        const submitting = await axios.put(`http://localhost:8081/products/${productID}`, formData)
+        const editedProduct = submitting.data.data;
+        this.products = [...(this.products.map(singleProd => (singleProd.id == productID ? editedProduct : singleProd)))];
+
+        return submitting;
+    }
+
+    async addProduct(formData) {
+        const submitting = await axios.post(`http://localhost:8081/products`, formData)
+        const insertedProduct = submitting.data.data;
+        this.products = [...this.products, insertedProduct];
+
+        return submitting;
+    }
+    
     async deleteProduct(productID) {
         const productsResponse = await axios.delete(
             `http://localhost:8081/products/${productID}`
         );
 
         this.products = [...(this.products.filter(singleProd => (singleProd.id != productID)))];
+    }
+
+    async deleteProductImage(imageID){
+        try {
+            const deletting = await axios.delete(`http://localhost:8081/products/images/${imageID}`)
+
+            this.products = [...(_.filter(this.products, {images: [{id: imageID}]}))];
+        } catch (error) {
+
+        }
     }
 
     get getProducts() {

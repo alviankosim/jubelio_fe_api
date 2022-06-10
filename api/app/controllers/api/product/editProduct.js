@@ -43,16 +43,21 @@ exports.editProduct = {
         images: moving.map(singleImage => (`${imgLocation}/${singleImage}`))
       }
 
+      let updatedProduct = singleProduct;
       if (Product.isValidProduct(singleProduct)) {
-        // inserting to database
-        await updateProductToDB(singleProduct, productID)
+          // inserting to database
+          await updateProductToDB(singleProduct, productID);
+          fetchUpdatedProduct = await Product.getProductByID(productID);
+          if (fetchUpdatedProduct[0]?.images) {
+              updatedProduct = fetchUpdatedProduct[0];
+          }
       }
 
       data = {
-        status: true,
-        code: 'SUCCESS',
-        message: 'Successfully edit product',
-        data: singleProduct
+          status : true,
+          code   : 'SUCCESS',
+          message: 'Successfully edit product',
+          data   : updatedProduct
       }
 
       return data
