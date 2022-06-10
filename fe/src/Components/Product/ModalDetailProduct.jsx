@@ -13,7 +13,7 @@ import withReactContent from 'sweetalert2-react-content'
 
 const MySwal = withReactContent(Swal)
 
-export const ModalDetailProduct = ({ show, onClose, isLoading, product, deleteImagee }) => {
+export const ModalDetailProduct = ({ show, onClose, isLoading, product, store }) => {
 
     const [files, setFiles] = useState([]);
 
@@ -66,7 +66,7 @@ export const ModalDetailProduct = ({ show, onClose, isLoading, product, deleteIm
                 formData.append('images', singleFile.file, singleFile.file.name)
             })
 
-            const submitting = await axios.put(`http://localhost:8081/products/${product?.id}`, formData)
+            const submitting = await store.editProduct(product?.id, formData);
 
             MySwal.close();
 
@@ -87,16 +87,6 @@ export const ModalDetailProduct = ({ show, onClose, isLoading, product, deleteIm
         submitFormAction();
     }
 
-    const deleteImageAction = async (imageID) => {
-        try {
-            const deletting = await axios.delete(`http://localhost:8081/products/images/${imageID}`)
-
-            deleteImagee(imageID);
-        } catch (error) {
-
-        }
-    }
-
     const deleteImage = (imageID) => {
 
         Swal.fire({
@@ -108,7 +98,7 @@ export const ModalDetailProduct = ({ show, onClose, isLoading, product, deleteIm
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                deleteImageAction(imageID);
+                store.deleteProductImage(imageID);
             }
         })
 

@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-
 const ImageUploadPreview = ({ files, setFiles }) => {
 
     function uploadSingleFile(e) {
@@ -18,13 +16,6 @@ const ImageUploadPreview = ({ files, setFiles }) => {
             <div style={{ display: 'flex', flexDirection: 'row', overflowX: 'scroll' }}>
                 {files.length > 0 && files.map((file, i) => <img key={i} height="100" style={{ objectFit: 'contain', marginBottom: '10px' }} src={file.url} />)}
             </div>
-            {/* <button
-        type="button"
-        className="btn btn-primary btn-block"
-        onClick={upload}
-      >
-        Upload
-      </button> */}
         </div>
     );
 };
